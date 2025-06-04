@@ -6,22 +6,73 @@
   <title>سامانه مدیریت گلخانه</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
 </head>
 <body class="grey lighten-4">
-  <div class="container">
-    <div class="row">
-      <div class="col s12 m8 offset-m2">
-        <div class="card">
-          <div class="card-content center">
-            <h4 class="green-text text-darken-2">به سامانه مدیریت گلخانه خوش آمدید</h4>
-            <p>مدیریت هوشمند داده‌های گلخانه، تحلیل تخصصی و داشبورد تعاملی</p>
-            <a href="login.html" class="btn green darken-2 waves-effect waves-light">شروع استفاده</a>
-          </div>
-        </div>
+  <div class="hero-section">
+    <div class="container">
+      <h1 class="scroll-anim">به گلخانه هوشمند خوش آمدید</h1>
+      <p class="scroll-anim">تحلیل پیشرفته داده‌ها برای رشد بهتر محصولات شما</p>
+      <div class="theme-selector scroll-anim">
+        <label>انتخاب تم: </label>
+        <select id="theme-select">
+          <option value="light">روشن</option>
+          <option value="dark">تیره</option>
+          <option value="green">سبز گلخانه‌ای</option>
+        </select>
       </div>
+      <a href="login.html" class="btn white green-text text-darken-2 waves-effect waves-light scroll-anim">شروع کنید</a>
     </div>
   </div>
+  <div class="container">
+    <h4 class="center scroll-anim">چطور کار می‌کند؟</h4>
+    <ul class="timeline">
+      <li class="timeline-item scroll-anim">
+        <i class="fas fa-seedling fa-2x green-text"></i>
+        <div class="timeline-content">
+          <h5>ثبت داده</h5>
+          <p>داده‌های گلخانه‌تون رو به سادگی وارد کنید.</p>
+        </div>
+      </li>
+      <li class="timeline-item scroll-anim">
+        <i class="fas fa-chart-line fa-2x blue-text"></i>
+        <div class="timeline-content">
+          <h5>تحلیل هوشمند</h5>
+          <p>داده‌ها با الگوریتم‌های پیشرفته تحلیل می‌شن.</p>
+        </div>
+      </li>
+      <li class="timeline-item scroll-anim">
+        <i class="fas fa-comment-alt fa-2x orange-text"></i>
+        <div class="timeline-content">
+          <h5>توصیه‌های عملی</h5>
+          <p>توصیه‌های دقیق برای بهبود شرایط دریافت کنید.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      M.FormSelect.init(document.querySelectorAll('select'));
+      const themeSelect = document.getElementById('theme-select');
+      themeSelect.addEventListener('change', () => {
+        document.body.classList.remove('light-theme', 'dark-theme', 'green-theme');
+        document.body.classList.add(`${themeSelect.value}-theme`);
+        localStorage.setItem('theme', themeSelect.value);
+      });
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.body.classList.add(`${savedTheme}-theme`);
+      themeSelect.value = savedTheme;
+
+      const scrollElements = document.querySelectorAll('.scroll-anim');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      });
+      scrollElements.forEach(el => observer.observe(el));
+    });
+  </script>
 </body>
 </html>

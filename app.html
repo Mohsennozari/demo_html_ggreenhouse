@@ -10,44 +10,67 @@
   <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-  <nav class="green darken-2">
+  <nav class="green darken-4">
     <div class="nav-wrapper container">
       <a href="#" class="brand-logo right">مدیریت گلخانه</a>
       <ul class="left">
         <li><a href="grower.html">ثبت داده</a></li>
         <li><a href="expert.html">تحلیل تخصصی</a></li>
         <li><a href="admin.html">مدیریت</a></li>
-        <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
-        <li><a href="#" onclick="logout()">خروج</a></li>
+        <li><a href="#!" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+        <li><a href="#!" onclick="logout()">خروج</a></li>
       </ul>
     </div>
   </nav>
 
   <div class="container">
     <section class="section">
-      <h4 class="center">داشبورد تحلیل داده</h4>
+      <h4 class="center scroll-anim">داشبورد تحلیل داده‌ها</h4>
       <div class="row">
-        <div class="col s12 m6">
+        <div class="col s12 m4">
           <div class="input-field">
             <select id="crop-filter">
-              <option value="همه">همه</option>
+              <option value="all">همه</option>
               <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
               <option value="خیار">خیار</option>
               <option value="فلفل">فلفل</option>
               <option value="کاهو">کاهو</option>
             </select>
-            <label>فیلتر بر اساس محصول</label>
+            <label for="crop-filter">فیلتر بر اساس محصول</label>
           </div>
         </div>
-        <div class="col s12 m6">
+        <div class="col s12 m4">
+          <div class="input-field">
+            <select id="time-filter">
+              <option value="all">همه</option>
+              <option value="7days">7 روز اخیر</option>
+              <option value="30days">30 روز اخیر</option>
+            </select>
+            <label for="time-filter">فیلتر زمانی</label>
+          </div>
+        </div>
+        <div class="col s12 m4">
           <button class="btn blue waves-effect waves-light" onclick="window.print()"><i class="fas fa-print left"></i>پرینت</button>
         </div>
       </div>
-      <div class="card">
+      <div class="row">
+        <div class="col s12 m4 scroll-anim"><canvas id="ph-gauge" class="gauge"></canvas></div>
+        <div class="col s12 m4 scroll-anim"><canvas id="temp-gauge" class="gauge"></canvas></div>
+        <div class="col s12 m4 scroll-anim"><canvas id="humidity-gauge" class="gauge"></canvas></div>
+      </div>
+      <div class="card scroll-anim">
         <div class="card-content">
+          <h5>هشدارهای فوری</h5>
+          <ul id="alerts" class="collection"></ul>
           <h5>خلاصه آماری</h5>
-          <p id="summary-text"></p>
-          <table class="highlight">
+          <table class="highlight striped">
+            <thead>
+              <tr><th>پارامتر</th><th>مقدار</th></tr>
+            </thead>
+            <tbody id="summary-table-body"></tbody>
+          </table>
+          <h5>جدول داده‌ها</h5>
+          <table class="highlight striped">
             <thead>
               <tr>
                 <th>pH خاک</th>
@@ -58,13 +81,40 @@
                 <th>زمان</th>
               </tr>
             </thead>
-            <tbody id="data-table"></tbody>
+            <tbody id="data-table-body"></tbody>
           </table>
+          <h5>توصیه‌های اخیر</h5>
+          <ul id="recent-recommendations" class="collection"></ul>
+          <h5>تحلیل‌های گرافیکی</h5>
           <div class="row">
-            <div class="col s12 m4"><canvas id="ph-chart"></canvas></div>
-            <div class="col s12 m4"><canvas id="temp-chart"></canvas></div>
-            <div class="col s12 m4"><canvas id="humidity-chart"></canvas></div>
-            <div class="col s12"><canvas id="ph-histogram"></canvas></div>
+            <div class="col s12 m4">
+              <canvas id="ph-chart"></canvas>
+              <p class="chart-caption">نمودار خطی تغییرات pH خاک در طول زمان برای محصول انتخاب‌شده.</p>
+            </div>
+            <div class="col s12 m4">
+              <canvas id="temp-chart"></canvas>
+              <p class="chart-caption">نمودار خطی تغییرات دما در طول زمان.</p>
+            </div>
+            <div class="col s12 m4">
+              <canvas id="humidity-chart"></canvas>
+              <p class="chart-caption">نمودار خطی تغییرات رطوبت در طول زمان.</p>
+            </div>
+            <div class="col s12 m6">
+              <canvas id="donut-chart"></canvas>
+              <p class="chart-caption">نمودار دوناتی توزیع وضعیت داده‌ها (عادی، هشدار، بحرانی).</p>
+            </div>
+            <div class="col s12 m6">
+              <canvas id="radar-chart"></canvas>
+              <p class="chart-caption">نمودار راداری مقایسه وضعیت فعلی با شرایط ایده‌آل.</p>
+            </div>
+            <div class="col s12 m6">
+              <canvas id="ph-histogram"></canvas>
+              <p class="chart-caption">هیستوگرام توزیع مقادیر pH خاک.</p>
+            </div>
+            <div class="col s12 m6">
+              <canvas id="scatter-chart"></canvas>
+              <p class="chart-caption">نمودار پراکندگی رابطه بین pH خاک و دما.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -87,6 +137,13 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       M.FormSelect.init(document.querySelectorAll('select'));
+      const scrollElements = document.querySelectorAll('.scroll-anim');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      });
+      scrollElements.forEach(el => observer.observe(el));
     });
   </script>
 </body>

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>پنل گلخانه‌دار</title>
+  <title>ثبت داده‌های گلخانه</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -12,9 +12,10 @@
 <body>
   <nav class="green darken-2">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo right">ثبت داده</a>
+      <a href="#" class="brand-logo right">مدیریت گلخانه</a>
       <ul class="left">
         <li><a href="app.html">داشبورد</a></li>
+        <li><a href="expert.html">تحلیل تخصصی</a></li>
         <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
         <li><a href="#" onclick="logout()">خروج</a></li>
       </ul>
@@ -23,67 +24,59 @@
 
   <div class="container">
     <section class="section">
-      <h4 class="center">ثبت داده‌های گلخانه</h4>
-      <div class="card">
+      <h4 class="center scroll-anim">ثبت داده‌های گلخانه</h4>
+      <div class="card scroll-anim">
         <div class="card-content">
           <form id="greenhouse-form">
-            <div class="input-field">
-              <input id="soil-ph" type="number" step="0.1" min="0" max="14" required>
-              <label for="soil-ph">pH خاک</label>
+            <div class="row">
+              <div class="input-field col s12 m6">
+                <i class="fas fa-vial prefix"></i>
+                <input id="soil-ph" type="number" step="0.1" min="0" max="14" required>
+                <label for="soil-ph">pH خاک</label>
+                <span class="helper-text" data-tooltip="pH خاک بین 0 تا 14 است">راهنما</span>
+              </div>
+              <div class="input-field col s12 m6">
+                <i class="fas fa-thermometer-half prefix"></i>
+                <input id="temperature" type="number" step="0.1" min="-10" max="50" required>
+                <label for="temperature">دما (°C)</label>
+                <span class="helper-text" data-tooltip="دما بین -10 تا 50°C">راهنما</span>
+              </div>
             </div>
-            <div class="input-field">
-              <input id="temperature" type="number" step="0.1" min="-10" max="50" required>
-              <label for="temperature">دما (°C)</label>
+            <div class="row">
+              <div class="input-field col s12 m6">
+                <i class="fas fa-tint prefix"></i>
+                <input id="humidity" type="number" step="1" min="0" max="100" required>
+                <label for="humidity">رطوبت (%)</label>
+                <span class="helper-text" data-tooltip="رطوبت بین 0 تا 100% است">راهنما</span>
+              </div>
+              <div class="input-field col s12 m6">
+                <i class="fas fa-water prefix"></i>
+                <select id="irrigation-status" required>
+                  <option value="کم">کم</option>
+                  <option value="متوسط">متوسط</option>
+                  <option value="زیاد">زیاد</option>
+                </select>
+                <label>وضعیت آبیاری</label>
+              </div>
             </div>
-            <div class="input-field">
-              <input id="humidity" type="number" step="1" min="0" max="100" required>
-              <label for="humidity">رطوبت (%)</label>
+            <div class="row">
+              <div class="input-field col s12">
+                <i class="fas fa-seedling prefix"></i>
+                <select id="crop-type" required>
+                  <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+                  <option value="خیار">خیار</option>
+                  <option value="فلفل">فلفل</option>
+                  <option value="کاهو">کاهو</option>
+                </select>
+                <label>نوع محصول</label>
+              </div>
             </div>
-            <div class="input-field">
-              <select id="irrigation-status" required>
-                <option value="" disabled selected>وضعیت آبیاری</option>
-                <option value="کم">کم</option>
-                <option value="متوسط">متوسط</option>
-                <option value="زیاد">زیاد</option>
-              </select>
-              <label>وضعیت آبیاری</label>
-            </div>
-            <div class="input-field">
-              <select id="crop-type" required>
-                <option value="" disabled selected>نوع محصول</option>
-                <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
-                <option value="خیار">خیار</option>
-                <option value="فلفل">فلفل</option>
-                <option value="کاهو">کاهو</option>
-              </select>
-              <label>نوع محصول</label>
-            </div>
-            <button type="submit" class="btn green darken-2 waves-effect waves-light"><i class="fas fa-save left"></i>ثبت</button>
+            <button class="btn green waves-effect waves-light" type="submit">ثبت داده<i class="fas fa-check right"></i></button>
           </form>
-          <div id="success-message" class="success-message">داده با موفقیت ثبت شد!</div>
         </div>
       </div>
-      <h5>توصیه‌های کارشناسی</h5>
-      <div class="card">
-        <div class="card-content">
-          <table class="highlight">
-            <thead>
-              <tr>
-                <th>pH خاک</th>
-                <th>دما (°C)</th>
-                <th>رطوبت (%)</th>
-                <th>آبیاری</th>
-                <th>محصول</th>
-                <th>وضعیت</th>
-                <th>توصیه</th>
-              </tr>
-            </thead>
-            <tbody id="expert-table"></tbody>
-          </table>
-          <h6>توصیه‌های دستی</h6>
-          <ul id="manual-recommendations" class="collection"></ul>
-        </div>
-      </div>
+      <h5 class="scroll-anim">توصیه‌های اخیر</h5>
+      <ul id="manual-recommendations" class="collection scroll-anim"></ul>
     </section>
   </div>
 
@@ -92,7 +85,14 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       M.FormSelect.init(document.querySelectorAll('select'));
-      loadRecommendations();
+      M.Tooltip.init(document.querySelectorAll('[data-tooltip]'));
+      const scrollElements = document.querySelectorAll('.scroll-anim');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('visible');
+        });
+      });
+      scrollElements.forEach(el => observer.observe(el));
     });
   </script>
 </body>
