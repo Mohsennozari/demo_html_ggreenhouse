@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پلتفرم مدیریت گلخانه</title>
+  <!-- Materialize CSS CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <!-- Vazir Font CDN -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <!-- Font Awesome CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo right">مدیریت گلخانه</a>
+        <ul class="left">
+          <li><a href="#form-section">ثبت داده</a></li>
+          <li><a href="#dashboard-section">داشبورد</a></li>
+          <li><a href="#expert-section">تحلیل تخصصی</a></li>
+          <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Critical Alert Banner -->
+  <div id="critical-alert" class="alert hidden">هشدار: شرایط بحرانی شناسایی شد!</div>
+
+  <!-- Form Section -->
+  <section id="form-section" class="container section scrollspy">
+    <div class="card collapsible">
+      <div class="card-content">
+        <h4>ثبت داده‌های گلخانه</h4>
+        <form id="greenhouse-form">
+          <div class="input-field">
+            <input id="soil-ph" type="number" step="0.1" min="0" max="14" required>
+            <label for="soil-ph">pH خاک</label>
+          </div>
+          <div class="input-field">
+            <input id="temperature" type="number" step="0.1" min="-10" max="50" required>
+            <label for="temperature">دما (°C)</label>
+          </div>
+          <div class="input-field">
+            <input id="humidity" type="number" step="1" min="0" max="100" required>
+            <label for="humidity">رطوبت (%)</label>
+          </div>
+          <div class="input-field">
+            <select id="irrigation-status" required>
+              <option value="" disabled selected>وضعیت آبیاری</option>
+              <option value="کم">کم</option>
+              <option value="متوسط">متوسط</option>
+              <option value="زیاد">زیاد</option>
+            </select>
+            <label>وضعیت آبیاری</label>
+          </div>
+          <div class="input-field">
+            <select id="crop-type" required>
+              <option value="" disabled selected>نوع محصول</option>
+              <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+              <option value="خیار">خیار</option>
+              <option value="فلفل">فلفل</option>
+              <option value="کاهو">کاهو</option>
+            </select>
+            <label>نوع محصول</label>
+          </div>
+          <div class="input-field">
+            <input id="timestamp" type="text" class="datepicker" required>
+            <label for="timestamp">تاریخ و زمان</label>
+          </div>
+          <button type="submit" class="btn"><i class="fas fa-save left"></i>ثبت</button>
+          <button type="button" class="btn grey" id="reset-form"><i class="fas fa-undo left"></i>بازنشانی</button>
+        </form>
+        <div id="success-message" class="success-message">داده با موفقیت ثبت شد!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dashboard Section -->
+  <section id="dashboard-section" class="container section scrollspy">
+    <div class="card collapsible">
+      <div class="card-content">
+        <h4>داشبورد</h4>
+        <div class="row">
+          <div class="col s12 m6">
+            <div class="input-field">
+              <select id="crop-filter">
+                <option value="همه">همه</option>
+                <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+                <option value="خیار">خیار</option>
+                <option value="فلفل">فلفل</option>
+                <option value="کاهو">کاهو</option>
+              </select>
+              <label>فیلتر بر اساس محصول</label>
+            </div>
+          </div>
+          <div class="col s12 m6">
+            <button class="btn" id="export-csv"><i class="fas fa-download left"></i>دانلود CSV</button>
+          </div>
+        </div>
+        <div class="card summary-card">
+          <div class="card-content">
+            <h5>خلاصه داده‌ها</h5>
+            <p id="summary-text"></p>
+          </div>
+        </div>
+        <table class="highlight">
+          <thead>
+            <tr>
+              <th>pH خاک</th>
+              <th>دما (°C)</th>
+              <th>رطوبت (%)</th>
+              <th>وضعیت آبیاری</th>
+              <th>نوع محصول</th>
+              <th>زمان</th>
+            </tr>
+          </thead>
+          <tbody id="data-table"></tbody>
+        </table>
+        <div class="row">
+          <div class="col s12 m4">
+            <canvas id="ph-chart"></canvas>
+          </div>
+          <div class="col s12 m4">
+            <canvas id="temp-chart"></canvas>
+          </div>
+          <div class="col s12 m4">
+            <canvas id="humidity-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expert View Section -->
+  <section id="expert-section" class="container section scrollspy">
+    <div class="card collapsible">
+      <div class="card-content">
+        <h4>تحلیل تخصصی</h4>
+        <div class="input-field">
+          <select id="recommendation-filter">
+            <option value="همه">همه</option>
+            <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+            <option value="خیار">خیار</option>
+            <option value="فلفل">فلفل</option>
+            <option value="کاهو">کاهو</option>
+          </select>
+          <label>فیلتر توصیه‌ها بر اساس محصول</label>
+        </div>
+        <table class="highlight">
+          <thead>
+            <tr>
+              <th>pH خاک</th>
+              <th>دما (°C)</th>
+              <th>رطوبت (%)</th>
+              <th>وضعیت آبیاری</th>
+              <th>نوع محصول</th>
+              <th>امتیاز شدت</th>
+              <th>وضعیت</th>
+              <th>توصیه‌ها</th>
+            </tr>
+          </thead>
+          <tbody id="expert-table"></tbody>
+        </table>
+        <h5>ثبت توصیه دستی</h5>
+        <form id="recommendation-form">
+          <div class="input-field">
+            <textarea id="recommendation-text" class="materialize-textarea" required></textarea>
+            <label for="recommendation-text">توصیه</label>
+          </div>
+          <button type="submit" class="btn"><i class="fas fa-save left"></i>ثبت توصیه</button>
+        </form>
+        <h5>توصیه‌های دستی</h5>
+        <ul id="manual-recommendations" class="collection"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading Spinner -->
+  <div id="loading-spinner" class="spinner hidden">
+    <div class="preloader-wrapper active">
+      <div class="spinner-layer spinner-green-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>

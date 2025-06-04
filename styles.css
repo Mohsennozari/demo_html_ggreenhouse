@@ -1,0 +1,125 @@
+body {
+  font-family: 'Vazir', sans-serif;
+  background-color: #f5f5f5;
+  direction: rtl;
+  text-align: right;
+  color: #333;
+  transition: background-color 0.3s, color 0.3s;
+}
+body.dark-mode {
+  background-color: #263238;
+  color: #e0e0e0;
+}
+.navbar-fixed nav {
+  background-color: #4caf50;
+}
+.nav-wrapper a {
+  color: #ffffff;
+}
+.card {
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #ffffff;
+}
+body.dark-mode .card {
+  background-color: #37474f;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.btn {
+  background-color: #f28c38;
+  border-radius: 10px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+.btn:hover {
+  background-color: #e67e22;
+  transform: scale(1.05);
+}
+.success-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4caf50;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 1000;
+}
+.success-message.show {
+  opacity: 1;
+}
+.alert {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  background-color: #d32f2f;
+  color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 1000;
+}
+.alert.show {
+  opacity: 1;
+}
+.recommendation {
+  color: #0288d1;
+  font-style: italic;
+  margin-top: 10px;
+}
+.status-green {
+  color: #4caf50;
+  font-weight: bold;
+}
+.status-red {
+  color: #d32f2f;
+  font-weight: bold;
+}
+.summary-card {
+  margin-top: 20px;
+}
+.spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+}
+.hidden {
+  display: none;
+}
+.collapsible-header {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f28c38;
+  color: #ffffff;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+.collapsible-body {
+  display: none;
+}
+.collapsible.active .collapsible-body {
+  display: block;
+}
+@media (max-width: 600px) {
+  .container {
+    padding: 0 10px;
+  }
+  .card {
+    margin: 10px;
+  }
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .collapsible-header {
+    display: block;
+  }
+}
