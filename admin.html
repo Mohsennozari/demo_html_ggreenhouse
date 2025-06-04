@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل مدیر</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="red darken-2">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo right">مدیریت</a>
+      <ul class="left">
+        <li><a href="app.html">داشبورد</a></li>
+        <li><a href="grower.html">ثبت داده</a></li>
+        <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+        <li><a href="#" onclick="logout()">خروج</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="section">
+      <h4 class="center">مدیریت کاربران</h4>
+      <div class="card">
+        <div class="card-content">
+          <ul id="user-list" class="collection"></ul>
+          <button class="btn blue waves-effect waves-light" onclick="window.print()"><i class="fas fa-print left"></i>پرینت</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

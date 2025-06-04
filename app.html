@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>داشبورد گلخانه</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="green darken-2">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo right">مدیریت گلخانه</a>
+      <ul class="left">
+        <li><a href="grower.html">ثبت داده</a></li>
+        <li><a href="expert.html">تحلیل تخصصی</a></li>
+        <li><a href="admin.html">مدیریت</a></li>
+        <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+        <li><a href="#" onclick="logout()">خروج</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="section">
+      <h4 class="center">داشبورد تحلیل داده</h4>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="input-field">
+            <select id="crop-filter">
+              <option value="همه">همه</option>
+              <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+              <option value="خیار">خیار</option>
+              <option value="فلفل">فلفل</option>
+              <option value="کاهو">کاهو</option>
+            </select>
+            <label>فیلتر بر اساس محصول</label>
+          </div>
+        </div>
+        <div class="col s12 m6">
+          <button class="btn blue waves-effect waves-light" onclick="window.print()"><i class="fas fa-print left"></i>پرینت</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h5>خلاصه آماری</h5>
+          <p id="summary-text"></p>
+          <table class="highlight">
+            <thead>
+              <tr>
+                <th>pH خاک</th>
+                <th>دما (°C)</th>
+                <th>رطوبت (%)</th>
+                <th>وضعیت آبیاری</th>
+                <th>نوع محصول</th>
+                <th>زمان</th>
+              </tr>
+            </thead>
+            <tbody id="data-table"></tbody>
+          </table>
+          <div class="row">
+            <div class="col s12 m4"><canvas id="ph-chart"></canvas></div>
+            <div class="col s12 m4"><canvas id="temp-chart"></canvas></div>
+            <div class="col s12 m4"><canvas id="humidity-chart"></canvas></div>
+            <div class="col s12"><canvas id="ph-histogram"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="loading-spinner" class="spinner hidden">
+    <div class="preloader-wrapper active">
+      <div class="spinner-layer spinner-green-only">
+        <div class="circle-clipper left"><div class="circle"></div></div>
+        <div class="gap-patch"><div class="circle"></div></div>
+        <div class="circle-clipper right"><div class="circle"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      M.FormSelect.init(document.querySelectorAll('select'));
+    });
+  </script>
+</body>
+</html>

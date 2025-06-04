@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل گلخانه‌دار</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="green darken-2">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo right">ثبت داده</a>
+      <ul class="left">
+        <li><a href="app.html">داشبورد</a></li>
+        <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+        <li><a href="#" onclick="logout()">خروج</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="section">
+      <h4 class="center">ثبت داده‌های گلخانه</h4>
+      <div class="card">
+        <div class="card-content">
+          <form id="greenhouse-form">
+            <div class="input-field">
+              <input id="soil-ph" type="number" step="0.1" min="0" max="14" required>
+              <label for="soil-ph">pH خاک</label>
+            </div>
+            <div class="input-field">
+              <input id="temperature" type="number" step="0.1" min="-10" max="50" required>
+              <label for="temperature">دما (°C)</label>
+            </div>
+            <div class="input-field">
+              <input id="humidity" type="number" step="1" min="0" max="100" required>
+              <label for="humidity">رطوبت (%)</label>
+            </div>
+            <div class="input-field">
+              <select id="irrigation-status" required>
+                <option value="" disabled selected>وضعیت آبیاری</option>
+                <option value="کم">کم</option>
+                <option value="متوسط">متوسط</option>
+                <option value="زیاد">زیاد</option>
+              </select>
+              <label>وضعیت آبیاری</label>
+            </div>
+            <div class="input-field">
+              <select id="crop-type" required>
+                <option value="" disabled selected>نوع محصول</option>
+                <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+                <option value="خیار">خیار</option>
+                <option value="فلفل">فلفل</option>
+                <option value="کاهو">کاهو</option>
+              </select>
+              <label>نوع محصول</label>
+            </div>
+            <button type="submit" class="btn green darken-2 waves-effect waves-light"><i class="fas fa-save left"></i>ثبت</button>
+          </form>
+          <div id="success-message" class="success-message">داده با موفقیت ثبت شد!</div>
+        </div>
+      </div>
+      <h5>توصیه‌های کارشناسی</h5>
+      <div class="card">
+        <div class="card-content">
+          <table class="highlight">
+            <thead>
+              <tr>
+                <th>pH خاک</th>
+                <th>دما (°C)</th>
+                <th>رطوبت (%)</th>
+                <th>آبیاری</th>
+                <th>محصول</th>
+                <th>وضعیت</th>
+                <th>توصیه</th>
+              </tr>
+            </thead>
+            <tbody id="expert-table"></tbody>
+          </table>
+          <h6>توصیه‌های دستی</h6>
+          <ul id="manual-recommendations" class="collection"></ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      M.FormSelect.init(document.querySelectorAll('select'));
+      loadRecommendations();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل کارشناس</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="styles.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="amber darken-2">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo right">تحلیل تخصصی</a>
+      <ul class="left">
+        <li><a href="app.html">داشبورد</a></li>
+        <li><a href="grower.html">ثبت داده</a></li>
+        <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
+        <li><a href="#" onclick="logout()">خروج</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+    <section class="section">
+      <h4 class="center">تحلیل داده‌های گلخانه</h4>
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="input-field">
+            <select id="recommendation-filter">
+              <option value="همه">همه</option>
+              <option value="گوجه‌فرنگی">گوجه‌فرنگی</option>
+              <option value="خیار">خیار</option>
+              <option value="فلفل">فلفل</option>
+              <option value="کاهو">کاهو</option>
+            </select>
+            <label>فیلتر توصیه‌ها</label>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h5>تحلیل محاسباتی</h5>
+          <table class="highlight">
+            <thead>
+              <tr>
+                <th>pH خاک</th>
+                <th>دما (°C)</th>
+                <th>رطوبت (%)</th>
+                <th>آبیاری</th>
+                <th>محصول</th>
+                <th>وضعیت</th>
+                <th>توصیه محاسباتی</th>
+              </tr>
+            </thead>
+            <tbody id="expert-table"></tbody>
+          </table>
+          <h5>ثبت توصیه دستی</h5>
+          <form id="recommendation-form">
+            <div class="input-field">
+              <textarea id="recommendation-text" class="materialize-textarea" required></textarea>
+              <label for="recommendation-text">توصیه</label>
+            </div>
+            <button type="submit" class="btn green darken-2 waves-effect waves-light"><i class="fas fa-save left"></i>ثبت توصیه</button>
+          </form>
+          <h5>توصیه‌های دستی</h5>
+          <ul id="manual-recommendations" class="collection"></ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      M.FormSelect.init(document.querySelectorAll('select'));
+    });
+  </script>
+</body>
+</html>
