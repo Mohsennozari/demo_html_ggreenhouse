@@ -2,7 +2,6 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>داشبورد گلخانه</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
@@ -12,12 +11,11 @@
 <body>
   <nav class="green darken-4">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo right">مدیریت گلخانه</a>
+      <a href="#" class="brand-logo right">مدیریت گلخانه</a> 
       <ul class="left">
         <li><a href="grower.html">ثبت داده</a></li>
         <li><a href="expert.html">تحلیل تخصصی</a></li>
         <li><a href="admin.html">مدیریت</a></li>
-        <li><a href="#!" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
         <li><a href="#!" onclick="logout()">خروج</a></li>
       </ul>
     </div>
@@ -36,39 +34,48 @@
               <option value="فلفل">فلفل</option>
               <option value="کاهو">کاهو</option>
             </select>
-            <label for="crop-filter">فیلتر بر اساس محصول</label>
+            <label>فیلتر بر اساس محصول</label>
           </div>
         </div>
         <div class="col s12 m4">
           <div class="input-field">
             <select id="time-filter">
               <option value="all">همه</option>
-              <option value="7days">7 روز اخیر</option>
-              <option value="30days">30 روز اخیر</option>
+              <option value="7days">۷ روز اخیر</option>
+              <option value="30days">۳۰ روز اخیر</option>
             </select>
-            <label for="time-filter">فیلتر زمانی</label>
+            <label>فیلتر زمانی</label>
           </div>
         </div>
         <div class="col s12 m4">
-          <button class="btn blue waves-effect waves-light" onclick="window.print()"><i class="fas fa-print left"></i>پرینت</button>
+          <button class="btn blue waves-effect waves-light" onclick="window.print()">
+            <i class="fas fa-print left"></i>پرینت
+          </button>
         </div>
       </div>
+
       <div class="row">
-        <div class="col s12 m4 scroll-anim"><canvas id="ph-gauge" class="gauge"></canvas></div>
-        <div class="col s12 m4 scroll-anim"><canvas id="temp-gauge" class="gauge"></canvas></div>
-        <div class="col s12 m4 scroll-anim"><canvas id="humidity-gauge" class="gauge"></canvas></div>
+        <div class="col s12 m4"><canvas id="ph-gauge" class="gauge"></canvas></div>
+        <div class="col s12 m4"><canvas id="temp-gauge" class="gauge"></canvas></div>
+        <div class="col s12 m4"><canvas id="humidity-gauge" class="gauge"></canvas></div>
       </div>
+
       <div class="card scroll-anim">
         <div class="card-content">
           <h5>هشدارهای فوری</h5>
           <ul id="alerts" class="collection"></ul>
+
           <h5>خلاصه آماری</h5>
-          <table class="highlight striped">
+          <table class="highlight striped" id="summary-table">
             <thead>
-              <tr><th>پارامتر</th><th>مقدار</th></tr>
+              <tr>
+                <th>پارامتر</th>
+                <th>مقدار</th>
+              </tr>
             </thead>
             <tbody id="summary-table-body"></tbody>
           </table>
+
           <h5>جدول داده‌ها</h5>
           <table class="highlight striped">
             <thead>
@@ -83,38 +90,15 @@
             </thead>
             <tbody id="data-table-body"></tbody>
           </table>
+
           <h5>توصیه‌های اخیر</h5>
           <ul id="recent-recommendations" class="collection"></ul>
+
           <h5>تحلیل‌های گرافیکی</h5>
           <div class="row">
-            <div class="col s12 m4">
-              <canvas id="ph-chart"></canvas>
-              <p class="chart-caption">نمودار خطی تغییرات pH خاک در طول زمان برای محصول انتخاب‌شده.</p>
-            </div>
-            <div class="col s12 m4">
-              <canvas id="temp-chart"></canvas>
-              <p class="chart-caption">نمودار خطی تغییرات دما در طول زمان.</p>
-            </div>
-            <div class="col s12 m4">
-              <canvas id="humidity-chart"></canvas>
-              <p class="chart-caption">نمودار خطی تغییرات رطوبت در طول زمان.</p>
-            </div>
-            <div class="col s12 m6">
-              <canvas id="donut-chart"></canvas>
-              <p class="chart-caption">نمودار دوناتی توزیع وضعیت داده‌ها (عادی، هشدار، بحرانی).</p>
-            </div>
-            <div class="col s12 m6">
-              <canvas id="radar-chart"></canvas>
-              <p class="chart-caption">نمودار راداری مقایسه وضعیت فعلی با شرایط ایده‌آل.</p>
-            </div>
-            <div class="col s12 m6">
-              <canvas id="ph-histogram"></canvas>
-              <p class="chart-caption">هیستوگرام توزیع مقادیر pH خاک.</p>
-            </div>
-            <div class="col s12 m6">
-              <canvas id="scatter-chart"></canvas>
-              <p class="chart-caption">نمودار پراکندگی رابطه بین pH خاک و دما.</p>
-            </div>
+            <div class="col s12 m6"><canvas id="ph-chart"></canvas></div>
+            <div class="col s12 m6"><canvas id="temp-chart"></canvas></div>
+            <div class="col s12 m6"><canvas id="humidity-chart"></canvas></div>
           </div>
         </div>
       </div>
@@ -131,8 +115,8 @@
     </div>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script> 
   <script src="app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {

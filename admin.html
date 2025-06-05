@@ -2,21 +2,18 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>پنل مدیریت</title>
   <link href="https://fonts.googleapis.com/css2?family=Vazir&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="styles.css" rel="stylesheet">
 </head>
 <body>
   <nav class="green darken-2">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo right">مدیریت گلخانه</a>
+      <a href="#" class="brand-logo right">مدیریت گلخانه</a> 
       <ul class="left">
         <li><a href="app.html">داشبورد</a></li>
         <li><a href="grower.html">ثبت داده</a></li>
-        <li><a href="#" id="dark-mode-toggle"><i class="fas fa-moon"></i></a></li>
         <li><a href="#" onclick="logout()">خروج</a></li>
       </ul>
     </div>
@@ -29,24 +26,19 @@
         <div class="card-content">
           <h5>لیست کاربران</h5>
           <ul id="user-list" class="collection"></ul>
-          <button class="btn blue waves-effect waves-light" onclick="window.print()"><i class="fas fa-print left"></i>پرینت</button>
+          <button class="btn blue waves-effect waves-light" onclick="window.print()">
+            <i class="fas fa-print left"></i>پرینت
+          </button>
         </div>
       </div>
     </section>
   </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> 
   <script src="app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      M.FormSelect.init(document.querySelectorAll('select'));
-      const scrollElements = document.querySelectorAll('.scroll-anim');
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('visible');
-        });
-      });
-      scrollElements.forEach(el => observer.observe(el));
+      loadUsers();
     });
   </script>
 </body>
